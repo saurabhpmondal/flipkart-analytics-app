@@ -1,20 +1,81 @@
-#sidebar{
-width:250px;
-background:#ffffff;
-border-right:1px solid #e5e7eb;
-padding:16px;
+/* ===== App Layout ===== */
+
+body{
+margin:0;
+font-family:Segoe UI, Arial, sans-serif;
+background:#f5f7fb;
 }
 
-.sidebar-container{
-font-size:14px;
+/* Header */
+
+header{
+height:60px;
+display:flex;
+align-items:center;
+padding:0 20px;
+background:white;
+border-bottom:1px solid #e5e7eb;
+font-weight:600;
 }
+
+/* Main App Layout */
+
+.app-layout{
+display:flex;
+height:calc(100vh - 60px);
+}
+
+/* Sidebar */
+
+#sidebar{
+width:240px;
+background:white;
+border-right:1px solid #e5e7eb;
+padding:15px;
+overflow-y:auto;
+}
+
+/* Content Area */
+
+.main-content{
+flex:1;
+display:flex;
+flex-direction:column;
+overflow:auto;
+padding:20px;
+}
+
+/* Filter Bar */
+
+#filter-bar{
+display:flex;
+align-items:flex-end;
+gap:12px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+/* Dashboard Sections */
+
+#dashboard-cards{
+margin-bottom:20px;
+}
+
+#dashboard-charts{
+margin-bottom:20px;
+}
+
+#dashboard-tables{
+margin-bottom:20px;
+}
+
+/* Sidebar styling (already working) */
 
 .menu-item.summary{
-padding:10px 12px;
+padding:10px;
 border-radius:6px;
 cursor:pointer;
 margin-bottom:12px;
-font-weight:600;
 }
 
 .menu-item.summary:hover{
