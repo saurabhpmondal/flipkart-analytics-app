@@ -1,6 +1,7 @@
 // js/ui/dashboard/dashboardRenderer.js
 
 import { renderGMVTable } from "../../reports/summary/gmvTable.js";
+import { renderGMVChart } from "../../charts/gmvTrendChart.js";
 
 export function renderDashboard() {
 
@@ -33,6 +34,7 @@ export function renderDashboard() {
     `;
 
     // Render Reports
+    renderGMVChart();
     renderGMVTable("gmv-table-container");
 
 }
