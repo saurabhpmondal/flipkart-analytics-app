@@ -2,6 +2,7 @@
 
 import { renderGMVTable } from "../../reports/summary/gmvTable.js";
 import { renderGMVChart } from "../../charts/gmvTrendChart.js";
+import { renderAdsChart } from "../../charts/adsSpendChart.js";
 
 export function renderDashboard() {
 
@@ -17,7 +18,7 @@ export function renderDashboard() {
         </div>
 
         <div class="chart-box">
-            <h3>Ads Spend Trend</h3>
+            <h3>Ads Spend vs Revenue</h3>
             <canvas id="adsChart"></canvas>
         </div>
 
@@ -33,8 +34,11 @@ export function renderDashboard() {
 
     `;
 
-    // Render Reports
+    // Render Charts
     renderGMVChart();
+    renderAdsChart();
+
+    // Render Tables
     renderGMVTable("gmv-table-container");
 
 }
