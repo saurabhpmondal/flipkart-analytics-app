@@ -1,1 +1,12 @@
-// placeholder
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #e5e7eb;
+text-align:left;
+font-size:14px;
+}

@@ -1,1 +1,16 @@
-// placeholder
+.main-layout{
+display:flex;
+height:calc(100vh - 60px);
+}
+
+.content{
+flex:1;
+padding:20px;
+overflow:auto;
+}
+
+#sidebar{
+width:220px;
+background:#fff;
+border-right:1px solid #e5e7eb;
+}

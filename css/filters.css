@@ -1,1 +1,11 @@
-// placeholder
+#filter-bar{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
+
+.filter{
+padding:8px;
+border:1px solid #ddd;
+border-radius:6px;
+}
