@@ -3,36 +3,53 @@
 import { renderHeader } from "./ui/header/headerRenderer.js";
 import { renderSidebar } from "./ui/sidebar/sidebarRenderer.js";
 import { renderFilters } from "./ui/filters/filterRenderer.js";
-import { renderCards } from "./ui/cards/kpiCardRenderer.js";
-import { renderDashboard } from "./ui/dashboard/dashboardRenderer.js";
 
-import { loadAllData } from "./core/dataLoader.js";
-import { logDataSummary } from "./core/dataStore.js";
+import { renderKpiCards } from "./reports/summary/kpiCards.js";
+import { renderGmvChart } from "./reports/summary/gmvChart.js";
+import { renderAdsChart } from "./reports/summary/adsChart.js";
+
+import { loadDatasets } from "./core/dataLoader.js";
 
 async function startApp() {
 
     console.log("Starting Flipkart Analytics App");
 
-    try {
+    await loadDatasets();
 
-        // Load all datasets from Google Sheets
-        await loadAllData();
+    renderHeader();
+    renderSidebar();
+    renderFilters();
 
-        // Show dataset stats
-        logDataSummary();
+    renderSummary();
 
-        // Render UI
-        renderHeader();
-        renderSidebar();
-        renderFilters();
-        renderCards();
-        renderDashboard();
+}
 
-        console.log("App loaded successfully");
+function renderSummary() {
 
-    } catch (error) {
+    const cardsContainer = document.getElementById("dashboard-cards");
+    const chartsContainer = document.getElementById("dashboard-charts");
 
-        console.error("App failed to start:", error);
+    if (cardsContainer) {
+
+        cardsContainer.innerHTML = "";
+        renderKpiCards("dashboard-cards");
+
+    }
+
+    if (chartsContainer) {
+
+        chartsContainer.innerHTML = `
+            <div class="chart-card">
+                <canvas id="gmvChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <canvas id="adsChart"></canvas>
+            </div>
+        `;
+
+        renderGmvChart("gmvChart");
+        renderAdsChart("adsChart");
 
     }
 
