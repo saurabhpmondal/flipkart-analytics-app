@@ -59,7 +59,7 @@ export function buildCampaignEfficiency() {
 
     });
 
-    rows.sort((a,b)=>b.cvr-a.cvr);
+    result.sort((a,b)=>b.cvr-a.cvr);
 
     return result;
 
