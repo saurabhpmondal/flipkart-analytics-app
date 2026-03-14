@@ -1,174 +1,105 @@
 // js/ui/sidebar/sidebarRenderer.js
 
-import { renderDashboard } from "../dashboard/dashboardRenderer.js";
-
-/* SUMMARY */
-import { renderKpiCards } from "../../reports/summary/kpiCards.js";
-import { renderGmvChart } from "../../reports/summary/gmvChart.js";
-import { renderAdsChart } from "../../reports/summary/adsChart.js";
-
-/* SALES */
-import { renderDailySales } from "../../reports/sales/dailySales.js";
-import { renderProductPerformance } from "../../reports/sales/productPerformance.js";
-import { renderCategoryPerformance } from "../../reports/sales/categoryPerformance.js";
-import { renderBrandPerformance } from "../../reports/sales/brandPerformance.js";
-import { renderLocationPerformance } from "../../reports/sales/locationPerformance.js";
-import { renderProductHealth } from "../../reports/sales/productHealth.js";
-import { renderVerticalPerformance } from "../../reports/sales/verticalPerformance.js";
-import { renderFulfillmentPerformance } from "../../reports/sales/fulfillmentPerformance.js";
-
-/* ADS */
-import { renderCampaignPerformance } from "../../reports/ads/campaignPerformance.js";
-import { renderDailyAdsPerformance } from "../../reports/ads/dailyAdsPerformance.js";
-import { renderAdsFunnel } from "../../reports/ads/adsFunnel.js";
-import { renderCampaignEfficiency } from "../../reports/ads/campaignEfficiency.js";
-
-/* KEYWORDS */
-import { renderKeywordPerformance } from "../../reports/keywords/keywordPerformance.js";
-import { renderKeywordScaling } from "../../reports/keywords/keywordScaling.js";
-import { renderKeywordWaste } from "../../reports/keywords/keywordWaste.js";
-
-/* PLACEMENTS */
-import { renderPlacementPerformance } from "../../reports/placements/placementPerformance.js";
-import { renderPlacementEfficiency } from "../../reports/placements/placementEfficiency.js";
-
-/* SKU ADS */
-import { renderSkuAdsPerformance } from "../../reports/skuAds/skuAdsPerformance.js";
-import { renderSkuConversion } from "../../reports/skuAds/skuConversion.js";
-import { renderAdsDependency } from "../../reports/skuAds/adsDependency.js";
-
-/* COMBINED */
-import { renderAdsVsOrganic } from "../../reports/combined/adsVsOrganic.js";
-import { renderSalesMomentum } from "../../reports/combined/salesMomentum.js";
-import { renderProductLifecycle } from "../../reports/combined/productLifecycle.js";
-import { renderTacosReport } from "../../reports/combined/tacosReport.js";
-
-
 export function renderSidebar() {
 
-    const sidebar = document.getElementById("sidebar");
+const sidebar=document.getElementById("sidebar");
 
-    sidebar.innerHTML = `
+sidebar.innerHTML=`
 
-        <div class="sidebar-container">
+<div class="sidebar-section">
 
-            <h3 class="sidebar-title">Analytics</h3>
+<div class="menu-item active" data-report="summary">
+📊 Summary
+</div>
 
-            <ul class="sidebar-menu">
+<div class="accordion">
 
-                <li id="menu-summary">Summary</li>
+<div class="accordion-header">Sales</div>
+<div class="accordion-body">
+<div data-report="dailySales">Daily Sales</div>
+<div data-report="productPerformance">Product Performance</div>
+<div data-report="categoryPerformance">Category Performance</div>
+<div data-report="brandPerformance">Brand Performance</div>
+<div data-report="locationPerformance">Location Performance</div>
+<div data-report="productHealth">Product Health</div>
+<div data-report="verticalPerformance">Vertical Performance</div>
+<div data-report="fulfillmentPerformance">Fulfillment Performance</div>
+</div>
 
-                <li class="menu-section">Sales</li>
-                <li id="menu-daily-sales">Daily Sales</li>
-                <li id="menu-product">Product Performance</li>
-                <li id="menu-category">Category Performance</li>
-                <li id="menu-brand">Brand Performance</li>
-                <li id="menu-location">Location Performance</li>
-                <li id="menu-product-health">Product Health</li>
-                <li id="menu-vertical">Vertical Performance</li>
-                <li id="menu-fulfillment">Fulfillment Performance</li>
+<div class="accordion-header">Ads</div>
+<div class="accordion-body">
+<div data-report="campaignPerformance">Campaign Performance</div>
+<div data-report="dailyAdsPerformance">Daily Ads Performance</div>
+<div data-report="adsFunnel">Ads Funnel</div>
+<div data-report="campaignEfficiency">Campaign Efficiency</div>
+</div>
 
-                <li class="menu-section">Ads</li>
-                <li id="menu-campaign">Campaign Performance</li>
-                <li id="menu-daily-ads">Daily Ads Performance</li>
-                <li id="menu-funnel">Ads Funnel</li>
-                <li id="menu-campaign-eff">Campaign Efficiency</li>
+<div class="accordion-header">Keywords</div>
+<div class="accordion-body">
+<div data-report="keywordPerformance">Keyword Performance</div>
+<div data-report="keywordScaling">Keyword Scaling</div>
+<div data-report="keywordWaste">Keyword Waste</div>
+</div>
 
-                <li class="menu-section">Keywords</li>
-                <li id="menu-keywords">Keyword Performance</li>
-                <li id="menu-keyword-scale">Keyword Scaling</li>
-                <li id="menu-keyword-waste">Keyword Waste</li>
+<div class="accordion-header">Placements</div>
+<div class="accordion-body">
+<div data-report="placementPerformance">Placement Performance</div>
+<div data-report="placementEfficiency">Placement Efficiency</div>
+</div>
 
-                <li class="menu-section">Placements</li>
-                <li id="menu-placement">Placement Performance</li>
-                <li id="menu-placement-eff">Placement Efficiency</li>
+<div class="accordion-header">SKU Ads</div>
+<div class="accordion-body">
+<div data-report="skuAdsPerformance">SKU Ads Performance</div>
+<div data-report="skuConversion">SKU Conversion</div>
+<div data-report="adsDependency">Ads Dependency</div>
+</div>
 
-                <li class="menu-section">SKU Ads</li>
-                <li id="menu-sku-ads">SKU Ads Performance</li>
-                <li id="menu-sku-conv">SKU Conversion</li>
-                <li id="menu-ads-dep">Ads Dependency</li>
+<div class="accordion-header">Combined Analytics</div>
+<div class="accordion-body">
+<div data-report="adsVsOrganic">Ads vs Organic</div>
+<div data-report="salesMomentum">Sales Momentum</div>
+<div data-report="productLifecycle">Product Lifecycle</div>
+<div data-report="tacosReport">TACOS Report</div>
+</div>
 
-                <li class="menu-section">Combined Analytics</li>
-                <li id="menu-ads-org">Ads vs Organic</li>
-                <li id="menu-momentum">Sales Momentum</li>
-                <li id="menu-lifecycle">Product Lifecycle</li>
-                <li id="menu-tacos">TACOS Report</li>
+</div>
 
-            </ul>
+</div>
+`;
 
-        </div>
-    `;
-
-    attachMenuEvents();
-
-}
-
-function attachMenuEvents() {
-
-    document.getElementById("menu-summary").onclick = () => {
-        clearContent();
-        renderDashboard();
-    };
-
-    bind("menu-daily-sales", "Daily Sales", renderDailySales);
-    bind("menu-product", "Product Performance", renderProductPerformance);
-    bind("menu-category", "Category Performance", renderCategoryPerformance);
-    bind("menu-brand", "Brand Performance", renderBrandPerformance);
-    bind("menu-location", "Location Performance", renderLocationPerformance);
-    bind("menu-product-health", "Product Health", renderProductHealth);
-    bind("menu-vertical", "Vertical Performance", renderVerticalPerformance);
-    bind("menu-fulfillment", "Fulfillment Performance", renderFulfillmentPerformance);
-
-    bind("menu-campaign", "Campaign Performance", renderCampaignPerformance);
-    bind("menu-daily-ads", "Daily Ads Performance", renderDailyAdsPerformance);
-    bind("menu-funnel", "Ads Funnel", renderAdsFunnel);
-    bind("menu-campaign-eff", "Campaign Efficiency", renderCampaignEfficiency);
-
-    bind("menu-keywords", "Keyword Performance", renderKeywordPerformance);
-    bind("menu-keyword-scale", "Keyword Scaling", renderKeywordScaling);
-    bind("menu-keyword-waste", "Keyword Waste", renderKeywordWaste);
-
-    bind("menu-placement", "Placement Performance", renderPlacementPerformance);
-    bind("menu-placement-eff", "Placement Efficiency", renderPlacementEfficiency);
-
-    bind("menu-sku-ads", "SKU Ads Performance", renderSkuAdsPerformance);
-    bind("menu-sku-conv", "SKU Conversion", renderSkuConversion);
-    bind("menu-ads-dep", "Ads Dependency", renderAdsDependency);
-
-    bind("menu-ads-org", "Ads vs Organic", renderAdsVsOrganic);
-    bind("menu-momentum", "Sales Momentum", renderSalesMomentum);
-    bind("menu-lifecycle", "Product Lifecycle", renderProductLifecycle);
-    bind("menu-tacos", "TACOS Report", renderTacosReport);
+initSidebar();
 
 }
 
-function bind(id, title, renderFunction) {
+function initSidebar(){
 
-    document.getElementById(id).onclick = () => {
+const headers=document.querySelectorAll(".accordion-header");
 
-        clearContent();
+headers.forEach(header=>{
 
-        const tables = document.getElementById("dashboard-tables");
+header.onclick=()=>{
 
-        tables.innerHTML = `
-            <div class="table-box">
-                <h3>${title}</h3>
-                <div id="report-container"></div>
-            </div>
-        `;
+const body=header.nextElementSibling;
 
-        renderFunction("report-container");
+document.querySelectorAll(".accordion-body").forEach(b=>{
+if(b!==body) b.style.display="none";
+});
 
-    };
+body.style.display=body.style.display==="block"?"none":"block";
 
-}
+};
 
-function clearContent() {
+});
 
-    const charts = document.getElementById("dashboard-charts");
-    const tables = document.getElementById("dashboard-tables");
+document.querySelectorAll("[data-report]").forEach(item=>{
 
-    charts.innerHTML = "";
-    tables.innerHTML = "";
+item.onclick=()=>{
+
+document.querySelectorAll("[data-report]").forEach(i=>i.classList.remove("active"));
+item.classList.add("active");
+
+};
+
+});
 
 }
