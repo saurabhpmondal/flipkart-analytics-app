@@ -1,10 +1,12 @@
 // js/charts/adsSpendChart.js
 
-import { getData } from "../core/dataStore.js";
+import { applyDateFilter } from "../core/filterEngine.js";
+
+let adsChartInstance = null;
 
 export function renderAdsChart() {
 
-    const data = getData("CDR");
+    const data = applyDateFilter("CDR", "Date");
 
     const grouped = {};
 
@@ -33,7 +35,7 @@ export function renderAdsChart() {
     const revenue = [];
 
     Object.keys(grouped)
-        .sort((a, b) => new Date(a) - new Date(b))
+        .sort((a, b) => new Date(a.split("/").reverse().join("-")) - new Date(b.split("/").reverse().join("-")))
         .forEach(date => {
 
             labels.push(date);
@@ -46,7 +48,12 @@ export function renderAdsChart() {
 
     if (!ctx) return;
 
-    new Chart(ctx, {
+    // Destroy previous chart
+    if (adsChartInstance) {
+        adsChartInstance.destroy();
+    }
+
+    adsChartInstance = new Chart(ctx, {
 
         type: "line",
 
