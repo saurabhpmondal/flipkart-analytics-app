@@ -76,7 +76,9 @@ export function renderTacosReport(containerId) {
 
                 <tr>
                     <td>Health Status</td>
-                    <td>${data.health}</td>
+                    <td style="color:${data.tacos<0.2?'green':'red'};font-weight:600">
+${data.health}
+</td>
                 </tr>
 
             </tbody>
