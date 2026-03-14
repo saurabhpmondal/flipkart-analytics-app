@@ -1,16 +1,68 @@
-.main-layout{
-display:flex;
-height:calc(100vh - 60px);
+/* css/layout.css */
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f5f7fb;
+    color: #333;
 }
 
-.content{
-flex:1;
-padding:20px;
-overflow:auto;
+.main-layout {
+    display: flex;
+    height: calc(100vh - 60px);
 }
 
-#sidebar{
-width:220px;
-background:#fff;
-border-right:1px solid #e5e7eb;
+/* Sidebar */
+
+#sidebar {
+    width: 240px;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding-top: 20px;
+}
+
+.sidebar-container {
+    padding: 0 15px;
+}
+
+.sidebar-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.sidebar-menu li:hover {
+    background: #f0f3f9;
+}
+
+.menu-section {
+    font-size: 12px;
+    color: #777;
+    text-transform: uppercase;
+    margin-top: 15px;
+    cursor: default;
+}
+
+/* Content */
+
+.content {
+    flex: 1;
+    padding: 20px 25px;
+    overflow-y: auto;
 }
