@@ -58,7 +58,7 @@ export function buildCampaignPerformance() {
 
     });
 
-    result.sort((a, b) => b.spend - a.spend);
+    result.sort((a,b)=>b.roi-a.roi);
 
     return result;
 
