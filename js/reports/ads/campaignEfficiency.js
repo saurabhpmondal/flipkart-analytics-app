@@ -59,7 +59,7 @@ export function buildCampaignEfficiency() {
 
     });
 
-    result.sort((a, b) => b.spend - a.spend);
+    result.sort((a,b)=>b.cvr-a.cvr);
 
     return result;
 
