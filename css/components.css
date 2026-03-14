@@ -126,3 +126,45 @@ background:#f3f4f6;
 }
 
 
+/* Ads Funnel */
+
+.funnel-container{
+
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+margin-top:20px;
+
+}
+
+.funnel-step{
+
+background:white;
+border-radius:10px;
+padding:16px;
+text-align:center;
+box-shadow:0 2px 8px rgba(0,0,0,0.05);
+
+}
+
+.funnel-step h3{
+
+font-size:14px;
+color:#6b7280;
+margin-bottom:6px;
+
+}
+
+.funnel-step p{
+
+font-size:20px;
+font-weight:600;
+
+}
+
+.funnel-step span{
+
+font-size:12px;
+color:#6b7280;
+
+}
