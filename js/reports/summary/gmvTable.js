@@ -1,10 +1,10 @@
 // js/reports/summary/gmvTable.js
 
-import { getData } from "../../core/dataStore.js";
+import { applyDateFilter } from "../../core/filterEngine.js";
 
 export function buildGMVTable() {
 
-    const data = getData("EM");
+    const data = applyDateFilter("EM", "Order Date");
 
     const grouped = {};
 
