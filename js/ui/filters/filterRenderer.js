@@ -29,19 +29,16 @@ export function renderFilters() {
             <input type="date" id="filter-end-date">
         </div>
 
-        <button id="apply-filter-btn">Apply</button>
-        <button id="reset-filter-btn">Reset</button>
+        <button id="apply-filter-btn" class="btn-primary">Apply</button>
+        <button id="reset-filter-btn" class="btn-secondary">Reset</button>
 
-        <div class="search-box">
-
-            <input 
+        <div class="search-wrapper">
+            <input
                 type="text"
                 id="global-search"
                 placeholder="Search SKU / Campaign / Keyword"
             >
-
             <span id="search-clear">×</span>
-
         </div>
 
     `;
@@ -52,11 +49,68 @@ export function renderFilters() {
 
 function attachEvents() {
 
-    const search = document.getElementById("global-search");
-    const clear = document.getElementById("search-clear");
+    const range = document.getElementById("filter-range");
+    const start = document.getElementById("filter-start-date");
+    const end = document.getElementById("filter-end-date");
 
     const apply = document.getElementById("apply-filter-btn");
     const reset = document.getElementById("reset-filter-btn");
+
+    const search = document.getElementById("global-search");
+    const clear = document.getElementById("search-clear");
+
+    range.onchange = () => {
+
+        const today = new Date();
+        let startDate = null;
+
+        if (range.value === "7") {
+
+            startDate = new Date();
+            startDate.setDate(today.getDate() - 7);
+
+        }
+
+        if (range.value === "30") {
+
+            startDate = new Date();
+            startDate.setDate(today.getDate() - 30);
+
+        }
+
+        if (startDate) {
+
+            start.value = startDate.toISOString().slice(0,10);
+            end.value = today.toISOString().slice(0,10);
+
+        }
+
+    };
+
+    apply.onclick = () => {
+
+        setDateFilter(start.value, end.value);
+
+        reloadDashboard();
+
+    };
+
+    reset.onclick = () => {
+
+        start.value = "";
+        end.value = "";
+        range.value = "";
+
+        setDateFilter(null, null);
+
+        search.value = "";
+        clear.style.display = "none";
+
+        setSearchQuery("");
+
+        reloadDashboard();
+
+    };
 
     search.oninput = () => {
 
@@ -81,37 +135,15 @@ function attachEvents() {
 
     };
 
-    apply.onclick = () => {
-
-        const start = document.getElementById("filter-start-date").value;
-        const end = document.getElementById("filter-end-date").value;
-
-        setDateFilter(start, end);
-
-        reloadDashboard();
-
-    };
-
-    reset.onclick = () => {
-
-        document.getElementById("filter-start-date").value = "";
-        document.getElementById("filter-end-date").value = "";
-
-        setDateFilter(null, null);
-
-        reloadDashboard();
-
-    };
-
 }
 
-function reloadDashboard(){
+function reloadDashboard() {
 
     const charts = document.getElementById("dashboard-charts");
     const tables = document.getElementById("dashboard-tables");
 
-    charts.innerHTML="";
-    tables.innerHTML="";
+    charts.innerHTML = "";
+    tables.innerHTML = "";
 
     renderDashboard();
 
