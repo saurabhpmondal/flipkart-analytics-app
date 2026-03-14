@@ -20,6 +20,22 @@ export function getFilters() {
 
 }
 
+function parseDDMMYYYY(dateStr) {
+
+    if (!dateStr) return null;
+
+    const parts = dateStr.split("/");
+
+    if (parts.length !== 3) return null;
+
+    const day = parts[0];
+    const month = parts[1];
+    const year = parts[2];
+
+    return new Date(`${year}-${month}-${day}`);
+
+}
+
 export function applyDateFilter(datasetName, dateField) {
 
     const data = getData(datasetName);
@@ -33,11 +49,13 @@ export function applyDateFilter(datasetName, dateField) {
 
     return data.filter(row => {
 
-        const dateValue = row[dateField];
+        const rawDate = row[dateField];
 
-        if (!dateValue) return false;
+        if (!rawDate) return false;
 
-        const rowDate = new Date(dateValue);
+        const rowDate = parseDDMMYYYY(rawDate);
+
+        if (!rowDate) return false;
 
         return rowDate >= start && rowDate <= end;
 
