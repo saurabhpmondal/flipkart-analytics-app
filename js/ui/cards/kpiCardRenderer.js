@@ -1,17 +1,53 @@
-export function renderCards(){
+// js/ui/cards/kpiCardRenderer.js
 
-document.getElementById('kpi-cards').innerHTML = `
+import {
+    calculateGMV,
+    calculateNetSales,
+    calculateAdsSpend,
+    calculateAdsRevenue,
+    calculateROI
+} from "../../core/metricsEngine.js";
 
-<div class="kpi-grid">
+import { formatCurrency } from "../../utils/formatCurrency.js";
 
-<div class="card"><b>GMV</b><br>₹0</div>
-<div class="card"><b>Net Sales</b><br>₹0</div>
-<div class="card"><b>Ads Spend</b><br>₹0</div>
-<div class="card"><b>Ads Revenue</b><br>₹0</div>
-<div class="card"><b>ROI</b><br>0</div>
+export function renderCards() {
 
-</div>
+    const gmv = calculateGMV();
+    const netSales = calculateNetSales();
+    const adsSpend = calculateAdsSpend();
+    const adsRevenue = calculateAdsRevenue();
+    const roi = calculateROI();
 
-`;
+    const container = document.getElementById("kpi-cards");
 
+    container.innerHTML = `
+        <div class="kpi-grid">
+
+            <div class="card">
+                <div class="card-title">GMV</div>
+                <div class="card-value">${formatCurrency(gmv)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Net Sales</div>
+                <div class="card-value">${formatCurrency(netSales)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Ads Spend</div>
+                <div class="card-value">${formatCurrency(adsSpend)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Ads Revenue</div>
+                <div class="card-value">${formatCurrency(adsRevenue)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">ROI</div>
+                <div class="card-value">${roi.toFixed(2)}</div>
+            </div>
+
+        </div>
+    `;
 }
