@@ -60,7 +60,7 @@ export function buildKeywordPerformance() {
 
     });
 
-    rows.sort((a,b)=>b.roi-a.roi);
+    result.sort((a,b)=>b.roi-a.roi);
 
     return result;
 
