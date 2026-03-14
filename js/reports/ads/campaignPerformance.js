@@ -1,10 +1,10 @@
 // js/reports/ads/campaignPerformance.js
 
-import { getData } from "../../core/dataStore.js";
+import { applyDateFilter } from "../../core/filterEngine.js";
 
 export function buildCampaignPerformance() {
 
-    const data = getData("CDR");
+    const data = applyDateFilter("CDR", "Date");
 
     const grouped = {};
 
