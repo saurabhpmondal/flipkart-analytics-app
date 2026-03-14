@@ -1,41 +1,38 @@
-export function renderDashboard(){
+// js/ui/dashboard/dashboardRenderer.js
 
-document.getElementById('dashboard-charts').innerHTML = `
+import { renderGMVTable } from "../../reports/summary/gmvTable.js";
 
-<div class="chart-box">
-<canvas id="gmvChart"></canvas>
-</div>
+export function renderDashboard() {
 
-<div class="chart-box">
-<canvas id="adsChart"></canvas>
-</div>
+    const chartsContainer = document.getElementById("dashboard-charts");
+    const tablesContainer = document.getElementById("dashboard-tables");
 
-`;
+    // Charts Section
+    chartsContainer.innerHTML = `
 
-const gmvCtx = document.getElementById('gmvChart');
+        <div class="chart-box">
+            <h3>GMV Trend</h3>
+            <canvas id="gmvChart"></canvas>
+        </div>
 
-new Chart(gmvCtx,{
-type:'line',
-data:{
-labels:['Mon','Tue','Wed','Thu','Fri'],
-datasets:[{
-label:'GMV',
-data:[120,190,300,500,200]
-}]
-}
-});
+        <div class="chart-box">
+            <h3>Ads Spend Trend</h3>
+            <canvas id="adsChart"></canvas>
+        </div>
 
-const adsCtx = document.getElementById('adsChart');
+    `;
 
-new Chart(adsCtx,{
-type:'bar',
-data:{
-labels:['Mon','Tue','Wed','Thu','Fri'],
-datasets:[{
-label:'Ads Spend',
-data:[20,40,50,30,60]
-}]
-}
-});
+    // Tables Section
+    tablesContainer.innerHTML = `
+
+        <div class="table-box">
+            <h3>Daily GMV Table</h3>
+            <div id="gmv-table-container"></div>
+        </div>
+
+    `;
+
+    // Render Reports
+    renderGMVTable("gmv-table-container");
 
 }
