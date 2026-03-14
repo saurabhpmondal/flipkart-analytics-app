@@ -3,6 +3,7 @@
 import { renderGMVTable } from "../../reports/summary/gmvTable.js";
 import { renderAdsTable } from "../../reports/summary/adsTable.js";
 import { renderVerticalSales } from "../../reports/summary/verticalSales.js";
+import { renderFulfillmentSales } from "../../reports/summary/fulfillmentSales.js";
 
 import { renderGMVChart } from "../../charts/gmvTrendChart.js";
 import { renderAdsChart } from "../../charts/adsSpendChart.js";
@@ -45,6 +46,11 @@ export function renderDashboard() {
             <div id="vertical-sales-container"></div>
         </div>
 
+        <div class="table-box">
+            <h3>Fulfillment Sales Performance</h3>
+            <div id="fulfillment-sales-container"></div>
+        </div>
+
     `;
 
     // Render Charts
@@ -55,5 +61,6 @@ export function renderDashboard() {
     renderGMVTable("gmv-table-container");
     renderAdsTable("ads-table-container");
     renderVerticalSales("vertical-sales-container");
+    renderFulfillmentSales("fulfillment-sales-container");
 
 }
