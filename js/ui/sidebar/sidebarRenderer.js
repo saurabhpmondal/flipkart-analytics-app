@@ -1,21 +1,80 @@
-export function renderSidebar(){
+// js/ui/sidebar/sidebarRenderer.js
 
-document.getElementById('sidebar').innerHTML = `
-<div style="padding:20px">
+import { renderDashboard } from "../dashboard/dashboardRenderer.js";
+import { renderCampaignPerformance } from "../../reports/ads/campaignPerformance.js";
 
-<h3>Navigation</h3>
+export function renderSidebar() {
 
-<ul style="list-style:none;margin-top:15px">
-<li>Summary</li>
-<li>Sales</li>
-<li>Ads</li>
-<li>SKU Ads</li>
-<li>Keywords</li>
-<li>Placements</li>
-<li>Combined Insights</li>
-</ul>
+    const sidebar = document.getElementById("sidebar");
 
-</div>
-`;
+    sidebar.innerHTML = `
+
+        <div class="sidebar-container">
+
+            <h3 class="sidebar-title">Analytics</h3>
+
+            <ul class="sidebar-menu">
+
+                <li id="menu-summary">Summary</li>
+
+                <li id="menu-ads">Ads</li>
+
+            </ul>
+
+        </div>
+
+    `;
+
+    attachMenuEvents();
+
+}
+
+function attachMenuEvents() {
+
+    const summaryBtn = document.getElementById("menu-summary");
+    const adsBtn = document.getElementById("menu-ads");
+
+    summaryBtn.onclick = () => {
+
+        clearContent();
+
+        renderDashboard();
+
+    };
+
+    adsBtn.onclick = () => {
+
+        clearContent();
+
+        renderAdsPage();
+
+    };
+
+}
+
+function clearContent() {
+
+    const charts = document.getElementById("dashboard-charts");
+    const tables = document.getElementById("dashboard-tables");
+
+    charts.innerHTML = "";
+    tables.innerHTML = "";
+
+}
+
+function renderAdsPage() {
+
+    const tables = document.getElementById("dashboard-tables");
+
+    tables.innerHTML = `
+
+        <div class="table-box">
+            <h3>Campaign Performance</h3>
+            <div id="campaign-performance-container"></div>
+        </div>
+
+    `;
+
+    renderCampaignPerformance("campaign-performance-container");
 
 }
