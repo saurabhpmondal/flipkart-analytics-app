@@ -1,6 +1,7 @@
 // js/ui/filters/filterRenderer.js
 
 import { setDateFilter } from "../../core/filterEngine.js";
+import { setSearchQuery } from "../../core/searchEngine.js";
 import { renderDashboard } from "../dashboard/dashboardRenderer.js";
 
 export function renderFilters() {
@@ -10,17 +11,13 @@ export function renderFilters() {
     container.innerHTML = `
 
         <div class="filter-group">
-
             <label>Start Date</label>
             <input type="date" id="filter-start-date">
-
         </div>
 
         <div class="filter-group">
-
             <label>End Date</label>
             <input type="date" id="filter-end-date">
-
         </div>
 
         <button id="apply-filter-btn">
@@ -42,6 +39,7 @@ export function renderFilters() {
 function attachFilterEvents() {
 
     const applyBtn = document.getElementById("apply-filter-btn");
+    const searchBox = document.getElementById("global-search");
 
     applyBtn.onclick = () => {
 
@@ -49,6 +47,16 @@ function attachFilterEvents() {
         const end = document.getElementById("filter-end-date").value;
 
         setDateFilter(start, end);
+
+        reloadDashboard();
+
+    };
+
+    searchBox.oninput = () => {
+
+        const query = searchBox.value;
+
+        setSearchQuery(query);
 
         reloadDashboard();
 
