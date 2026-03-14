@@ -80,32 +80,6 @@ export function renderAdsFunnel(containerId) {
 
     `;
 
-    container.innerHTML = `
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
-
-<div class="card">
-<div class="card-title">Views</div>
-<div class="card-value">${data.views.toLocaleString()}</div>
-</div>
-
-<div class="card">
-<div class="card-title">Clicks</div>
-<div class="card-value">${data.clicks.toLocaleString()}</div>
-<div>CTR ${(data.ctr*100).toFixed(2)}%</div>
-</div>
-
-<div class="card">
-<div class="card-title">Conversions</div>
-<div class="card-value">${data.units}</div>
-<div>CVR ${(data.cvr*100).toFixed(2)}%</div>
-</div>
-
-<div class="card">
-<div class="card-title">Revenue</div>
-<div class="card-value">₹ ${data.revenue.toLocaleString("en-IN")}</div>
-<div>RPC ₹${data.rpc.toFixed(2)}</div>
-</div>
-
-</div>`;
+    container.innerHTML = html;
 
 }

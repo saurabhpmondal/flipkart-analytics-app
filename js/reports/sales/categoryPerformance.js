@@ -2,82 +2,104 @@
 
 import { applyDateFilter } from "../../core/filterEngine.js";
 
-export function renderCategoryPerformance(containerId){
+export function buildCategoryPerformance() {
 
-const data = applyDateFilter("EM","Order Date");
+    const data = applyDateFilter("EM", "Order Date");
 
-const grouped={};
-let total=0;
+    const grouped = {};
 
-data.forEach(r=>{
+    data.forEach(row => {
 
-const cat=r["Category"];
+        const category = row["Category"];
 
-if(!cat)return;
+        if (!category) return;
 
-if(!grouped[cat]) grouped[cat]={gross:0,cancel:0,returns:0,revenue:0};
+        if (!grouped[category]) {
 
-grouped[cat].gross+=Number(r["Gross Units"]||0);
-grouped[cat].cancel+=Number(r["Cancellation Units"]||0);
-grouped[cat].returns+=Number(r["Return Units"]||0);
-grouped[cat].revenue+=Number(r["Final Sale Amount"]||0);
+            grouped[category] = {
+                gross: 0,
+                cancel: 0,
+                returns: 0,
+                revenue: 0
+            };
 
-total+=Number(r["Gross Units"]||0);
+        }
 
-});
+        grouped[category].gross += Number(row["Gross Units"] || 0);
+        grouped[category].cancel += Number(row["Cancellation Units"] || 0);
+        grouped[category].returns += Number(row["Return Units"] || 0);
+        grouped[category].revenue += Number(row["Final Sale Amount"] || 0);
 
-const rows=[];
+    });
 
-Object.keys(grouped).forEach(cat=>{
+    const result = [];
 
-const g=grouped[cat];
-const net=g.gross-g.cancel-g.returns;
+    Object.keys(grouped).forEach(category => {
 
-rows.push({
-cat,
-gross:g.gross,
-cancel:g.cancel,
-returns:g.returns,
-net,
-revenue:g.revenue,
-share:g.gross/total
-});
+        const g = grouped[category];
 
-});
+        const net = g.gross - g.cancel - g.returns;
 
-rows.sort((a,b)=>b.gross-a.gross);
+        result.push({
+            category: category,
+            gross: g.gross,
+            cancel: g.cancel,
+            returns: g.returns,
+            net: net,
+            revenue: g.revenue
+        });
 
-const container=document.getElementById(containerId);
+    });
 
-let html=`<table>
-<thead>
-<tr>
-<th>Category</th>
-<th>Gross</th>
-<th>Cancel</th>
-<th>Return</th>
-<th>Net</th>
-<th>Revenue</th>
-<th>Share</th>
-</tr>
-</thead><tbody>`;
+    result.sort((a, b) => b.revenue - a.revenue);
 
-rows.forEach(r=>{
+    return result;
 
-html+=`<tr>
-<td>${r.cat}</td>
-<td>${r.gross}</td>
-<td>${r.cancel}</td>
-<td>${r.returns}</td>
-<td>${r.net}</td>
-<td>${r.revenue}</td>
-<td>${(r.share*100).toFixed(2)}%</td>
-</tr>`;
+}
 
-});
+export function renderCategoryPerformance(containerId) {
 
-html+="</tbody></table>";
+    const rows = buildCategoryPerformance();
 
-container.innerHTML=html;
+    const container = document.getElementById(containerId);
+
+    if (!container) return;
+
+    let html = `
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Gross Units</th>
+                <th>Cancel Units</th>
+                <th>Return Units</th>
+                <th>Net Units</th>
+                <th>Revenue</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+
+    rows.forEach(r => {
+
+        html += `
+        <tr>
+            <td>${r.category}</td>
+            <td>${r.gross}</td>
+            <td>${r.cancel}</td>
+            <td>${r.returns}</td>
+            <td>${r.net}</td>
+            <td>${r.revenue}</td>
+        </tr>
+        `;
+
+    });
+
+    html += `
+        </tbody>
+    </table>
+    `;
+
+    container.innerHTML = html;
 
 }

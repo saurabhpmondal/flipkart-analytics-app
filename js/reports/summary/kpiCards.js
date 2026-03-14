@@ -8,46 +8,69 @@ export function renderKpiCards(containerId) {
 
     const container = document.getElementById(containerId);
 
-    if (!container) {
-        console.error("KPI container not found:", containerId);
-        return;
-    }
+    if (!container) return;
 
-    const formatCurrency = (num) => "₹" + num.toLocaleString("en-IN");
+    const formatNumber = (num) => {
 
-    const formatNumber = (num) => num.toLocaleString("en-IN");
+        return num.toLocaleString("en-IN");
 
-    container.innerHTML = `
-    
-    <div class="kpi-grid">
+    };
 
-        <div class="kpi-card">
-            <div class="kpi-title">GMV</div>
-            <div class="kpi-value">${formatCurrency(data.gmv)}</div>
+    const formatCurrency = (num) => {
+
+        return "₹ " + num.toLocaleString("en-IN");
+
+    };
+
+    const formatPercent = (num) => {
+
+        return (num * 100).toFixed(2) + "%";
+
+    };
+
+    let html = `
+
+        <div class="kpi-grid">
+
+            <div class="card">
+                <div class="card-title">GMV (Gross Units)</div>
+                <div class="card-value">${formatNumber(data.grossUnits)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Net Units</div>
+                <div class="card-value">${formatNumber(data.netUnits)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Revenue</div>
+                <div class="card-value">${formatCurrency(data.revenue)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Ad Spend</div>
+                <div class="card-value">${formatCurrency(data.adSpend)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Ads Revenue</div>
+                <div class="card-value">${formatCurrency(data.adRevenue)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">ROI</div>
+                <div class="card-value">${data.roi.toFixed(2)}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">TACOS</div>
+                <div class="card-value">${formatPercent(data.tacos)}</div>
+            </div>
+
         </div>
 
-        <div class="kpi-card">
-            <div class="kpi-title">Net Sales</div>
-            <div class="kpi-value">${formatCurrency(data.netSales)}</div>
-        </div>
-
-        <div class="kpi-card">
-            <div class="kpi-title">Ads Spend</div>
-            <div class="kpi-value">${formatCurrency(data.adSpend)}</div>
-        </div>
-
-        <div class="kpi-card">
-            <div class="kpi-title">Ads Revenue</div>
-            <div class="kpi-value">${formatCurrency(data.adsRevenue)}</div>
-        </div>
-
-        <div class="kpi-card">
-            <div class="kpi-title">ROI</div>
-            <div class="kpi-value">${formatNumber(data.roi)}</div>
-        </div>
-
-    </div>
-    
     `;
+
+    container.innerHTML = html;
 
 }

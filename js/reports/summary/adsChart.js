@@ -16,7 +16,14 @@ export function renderAdsChart(containerId) {
 
         if (!date) return;
 
-        if (!grouped[date]) grouped[date] = { spend: 0, revenue: 0 };
+        if (!grouped[date]) {
+
+            grouped[date] = {
+                spend: 0,
+                revenue: 0
+            };
+
+        }
 
         grouped[date].spend += Number(row["Ad Spend"] || 0);
         grouped[date].revenue += Number(row["Total Revenue (Rs.)"] || 0);
@@ -24,16 +31,23 @@ export function renderAdsChart(containerId) {
     });
 
     const labels = [];
-    const spend = [];
-    const revenue = [];
+    const spendData = [];
+    const revenueData = [];
 
     Object.keys(grouped)
-        .sort((a, b) => new Date(a.split("/").reverse().join("-")) - new Date(b.split("/").reverse().join("-")))
+        .sort((a, b) => {
+
+            const da = new Date(a.split("/").reverse().join("-"));
+            const db = new Date(b.split("/").reverse().join("-"));
+
+            return da - db;
+
+        })
         .forEach(date => {
 
             labels.push(date);
-            spend.push(grouped[date].spend);
-            revenue.push(grouped[date].revenue);
+            spendData.push(grouped[date].spend);
+            revenueData.push(grouped[date].revenue);
 
         });
 
@@ -41,46 +55,52 @@ export function renderAdsChart(containerId) {
 
     if (!ctx) return;
 
-    if (adsChartInstance) adsChartInstance.destroy();
+    if (adsChartInstance) {
+        adsChartInstance.destroy();
+    }
 
     adsChartInstance = new Chart(ctx, {
 
         type: "line",
 
         data: {
-            labels,
+
+            labels: labels,
+
             datasets: [
 
                 {
                     label: "Ad Spend",
-                    data: spend,
-                    tension: .4,
-                    borderWidth: 3,
-                    borderColor: "#ef4444",
-                    backgroundColor: "rgba(239,68,68,.15)",
-                    fill: true
+                    data: spendData,
+                    tension: 0.3
                 },
 
                 {
                     label: "Ads Revenue",
-                    data: revenue,
-                    tension: .4,
-                    borderWidth: 3,
-                    borderColor: "#10b981",
-                    backgroundColor: "rgba(16,185,129,.15)",
-                    fill: true
+                    data: revenueData,
+                    tension: 0.3
                 }
 
             ]
+
         },
 
         options: {
+
             responsive: true,
-            plugins: { legend: { position: "top" } },
+
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+
             scales: {
-                y: { beginAtZero: true },
-                x: { grid: { display: false } }
+                y: {
+                    beginAtZero: true
+                }
             }
+
         }
 
     });
