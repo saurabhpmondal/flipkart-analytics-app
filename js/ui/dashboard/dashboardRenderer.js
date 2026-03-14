@@ -2,6 +2,7 @@
 
 import { renderGMVTable } from "../../reports/summary/gmvTable.js";
 import { renderAdsTable } from "../../reports/summary/adsTable.js";
+import { renderVerticalSales } from "../../reports/summary/verticalSales.js";
 
 import { renderGMVChart } from "../../charts/gmvTrendChart.js";
 import { renderAdsChart } from "../../charts/adsSpendChart.js";
@@ -39,6 +40,11 @@ export function renderDashboard() {
             <div id="ads-table-container"></div>
         </div>
 
+        <div class="table-box">
+            <h3>Vertical Sales Performance</h3>
+            <div id="vertical-sales-container"></div>
+        </div>
+
     `;
 
     // Render Charts
@@ -48,5 +54,6 @@ export function renderDashboard() {
     // Render Tables
     renderGMVTable("gmv-table-container");
     renderAdsTable("ads-table-container");
+    renderVerticalSales("vertical-sales-container");
 
 }
