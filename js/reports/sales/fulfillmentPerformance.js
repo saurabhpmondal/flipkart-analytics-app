@@ -7,12 +7,19 @@ export function buildFulfillmentPerformance() {
     const data = applyDateFilter("EM", "Order Date");
 
     const grouped = {};
+    let totalGross = 0;
 
     data.forEach(row => {
 
         const type = row["Fulfillment Type"];
-
         if (!type) return;
+
+        const gross = Number(row["Gross Units"] || 0);
+        const cancel = Number(row["Cancellation Units"] || 0);
+        const returns = Number(row["Return Units"] || 0);
+        const revenue = Number(row["Final Sale Amount"] || 0);
+
+        totalGross += gross;
 
         if (!grouped[type]) {
 
@@ -25,10 +32,10 @@ export function buildFulfillmentPerformance() {
 
         }
 
-        grouped[type].gross += Number(row["Gross Units"] || 0);
-        grouped[type].cancel += Number(row["Cancellation Units"] || 0);
-        grouped[type].returns += Number(row["Return Units"] || 0);
-        grouped[type].revenue += Number(row["Final Sale Amount"] || 0);
+        grouped[type].gross += gross;
+        grouped[type].cancel += cancel;
+        grouped[type].returns += returns;
+        grouped[type].revenue += revenue;
 
     });
 
@@ -37,16 +44,18 @@ export function buildFulfillmentPerformance() {
     Object.keys(grouped).forEach(type => {
 
         const g = grouped[type];
-
         const net = g.gross - g.cancel - g.returns;
 
+        const share = totalGross === 0 ? 0 : g.gross / totalGross;
+
         result.push({
-            type: type,
+            type,
             gross: g.gross,
             cancel: g.cancel,
             returns: g.returns,
-            net: net,
-            revenue: g.revenue
+            net,
+            revenue: g.revenue,
+            share
         });
 
     });
@@ -62,7 +71,6 @@ export function renderFulfillmentPerformance(containerId) {
     const rows = buildFulfillmentPerformance();
 
     const container = document.getElementById(containerId);
-
     if (!container) return;
 
     let html = `
@@ -75,6 +83,7 @@ export function renderFulfillmentPerformance(containerId) {
                     <th>Return Units</th>
                     <th>Net Units</th>
                     <th>Revenue</th>
+                    <th>Share %</th>
                 </tr>
             </thead>
             <tbody>
@@ -90,15 +99,13 @@ export function renderFulfillmentPerformance(containerId) {
                 <td>${r.returns}</td>
                 <td>${r.net}</td>
                 <td>${r.revenue.toFixed(0)}</td>
+                <td>${(r.share * 100).toFixed(2)}%</td>
             </tr>
         `;
 
     });
 
-    html += `
-            </tbody>
-        </table>
-    `;
+    html += `</tbody></table>`;
 
     container.innerHTML = html;
 
