@@ -68,7 +68,7 @@ export function buildKeywordScaling() {
     });
 
     // Scaling opportunity → highest ROI first
-    result.sort((a, b) => b.roi - a.roi);
+    result.sort((a,b)=>b.roi-a.roi);
 
     return result;
 
