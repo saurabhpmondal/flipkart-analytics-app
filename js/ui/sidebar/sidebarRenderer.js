@@ -1,5 +1,7 @@
 // js/ui/sidebar/sidebarRenderer.js
 
+import { renderDashboard } from "../dashboard/dashboardRenderer.js";
+
 export function renderSidebar() {
 
     const sidebar = document.getElementById("sidebar");
@@ -108,8 +110,7 @@ function initSidebar() {
 
     });
 
-    /* ADD REPORT CLICK LOGIC */
-
+    // REPORT CLICK HANDLER
     const menuItems = document.querySelectorAll(".menu-item");
 
     menuItems.forEach(item => {
@@ -121,9 +122,13 @@ function initSidebar() {
 
             const report = item.dataset.report;
 
-            window.dispatchEvent(
-                new CustomEvent("report-change", { detail: report })
-            );
+            const charts = document.getElementById("dashboard-charts");
+            const tables = document.getElementById("dashboard-tables");
+
+            if (charts) charts.innerHTML = "";
+            if (tables) tables.innerHTML = "";
+
+            renderDashboard(report);
 
         };
 
