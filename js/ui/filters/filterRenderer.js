@@ -16,8 +16,6 @@ export function renderFilters() {
                 <option value="">Custom</option>
                 <option value="7">Last 7 Days</option>
                 <option value="30">Last 30 Days</option>
-                <option value="thisMonth">This Month</option>
-                <option value="lastMonth">Last Month</option>
             </select>
         </div>
 
@@ -32,32 +30,58 @@ export function renderFilters() {
         </div>
 
         <button id="apply-filter-btn">Apply</button>
-
         <button id="reset-filter-btn">Reset</button>
 
-        <div class="search-wrapper">
+        <div class="search-box">
+
             <input 
-                type="text" 
-                id="global-search" 
+                type="text"
+                id="global-search"
                 placeholder="Search SKU / Campaign / Keyword"
             >
+
             <span id="search-clear">×</span>
+
         </div>
 
     `;
 
-    attachFilterEvents();
+    attachEvents();
 
 }
 
-function attachFilterEvents() {
+function attachEvents() {
 
-    const applyBtn = document.getElementById("apply-filter-btn");
-    const resetBtn = document.getElementById("reset-filter-btn");
-    const searchBox = document.getElementById("global-search");
-    const clearBtn = document.getElementById("search-clear");
+    const search = document.getElementById("global-search");
+    const clear = document.getElementById("search-clear");
 
-    applyBtn.onclick = () => {
+    const apply = document.getElementById("apply-filter-btn");
+    const reset = document.getElementById("reset-filter-btn");
+
+    search.oninput = () => {
+
+        const q = search.value;
+
+        setSearchQuery(q);
+
+        clear.style.display = q ? "block" : "none";
+
+        reloadDashboard();
+
+    };
+
+    clear.onclick = () => {
+
+        search.value = "";
+        clear.style.display = "none";
+
+        setSearchQuery("");
+
+        reloadDashboard();
+
+    };
+
+    apply.onclick = () => {
 
         const start = document.getElementById("filter-start-date").value;
         const end = document.getElementById("filter-end-date").value;
@@ -68,11 +92,10 @@ function attachFilterEvents() {
 
     };
 
-    resetBtn.onclick = () => {
+    reset.onclick = () => {
 
         document.getElementById("filter-start-date").value = "";
         document.getElementById("filter-end-date").value = "";
-        document.getElementById("filter-range").value = "";
 
         setDateFilter(null, null);
 
@@ -80,39 +103,15 @@ function attachFilterEvents() {
 
     };
 
-    searchBox.oninput = () => {
-
-        const query = searchBox.value;
-
-        setSearchQuery(query);
-
-        clearBtn.style.display = query ? "block" : "none";
-
-        reloadDashboard();
-
-    };
-
-    clearBtn.onclick = () => {
-
-        searchBox.value = "";
-
-        setSearchQuery("");
-
-        clearBtn.style.display = "none";
-
-        reloadDashboard();
-
-    };
-
 }
 
-function reloadDashboard() {
+function reloadDashboard(){
 
     const charts = document.getElementById("dashboard-charts");
     const tables = document.getElementById("dashboard-tables");
 
-    charts.innerHTML = "";
-    tables.innerHTML = "";
+    charts.innerHTML="";
+    tables.innerHTML="";
 
     renderDashboard();
 
