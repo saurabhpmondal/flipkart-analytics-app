@@ -1,10 +1,10 @@
 // js/reports/summary/adsTable.js
 
-import { getData } from "../../core/dataStore.js";
+import { applyDateFilter } from "../../core/filterEngine.js";
 
 export function buildAdsTable() {
 
-    const data = getData("CDR");
+    const data = applyDateFilter("CDR", "Date");
 
     const grouped = {};
 
