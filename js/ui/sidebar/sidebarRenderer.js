@@ -1,46 +1,30 @@
 // js/ui/sidebar/sidebarRenderer.js
 
-import { renderDashboard } from "../dashboard/dashboardRenderer.js";
-import { renderReport } from "../dashboard/reportRouter.js";
+export function renderSidebar() {
 
-export function renderSidebar(){
+    const sidebar = document.getElementById("sidebar");
 
-const sidebar=document.getElementById("sidebar");
+    if (!sidebar) return;
 
-const items=sidebar.querySelectorAll("[data-report]");
+    const items = sidebar.querySelectorAll("[data-report]");
 
-items.forEach(item=>{
+    items.forEach(item => {
 
-item.onclick=()=>{
+        item.onclick = () => {
 
-items.forEach(i=>i.classList.remove("active"));
-item.classList.add("active");
+            items.forEach(i => i.classList.remove("active"));
 
-const report=item.dataset.report;
+            item.classList.add("active");
 
-if(report==="summary"){
+            // Navigation handled by existing router in app/dashboard
+            const event = new CustomEvent("report-change", {
+                detail: item.dataset.report
+            });
 
-reloadSummary();
-return;
+            window.dispatchEvent(event);
 
-}
+        };
 
-renderReport(report);
-
-};
-
-});
-
-}
-
-function reloadSummary(){
-
-const charts=document.getElementById("dashboard-charts");
-const tables=document.getElementById("dashboard-tables");
-
-charts.innerHTML="";
-tables.innerHTML="";
-
-renderDashboard();
+    });
 
 }
