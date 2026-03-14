@@ -1,31 +1,78 @@
-header{
-height:60px;
-background:white;
-display:flex;
-align-items:center;
-padding:0 20px;
-border-bottom:1px solid #e5e7eb;
-font-weight:bold;
+/* css/components.css */
+
+header {
+    height: 60px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+    font-size: 18px;
 }
 
-.kpi-grid{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:15px;
-margin-bottom:20px;
+/* KPI Cards */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 25px;
 }
 
-.card{
-background:white;
-padding:16px;
-border-radius:8px;
-border:1px solid #e5e7eb;
+.card {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
 }
 
-.chart-box{
-background:white;
-padding:16px;
-border-radius:8px;
-border:1px solid #e5e7eb;
-margin-bottom:20px;
+.card-title {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.card-value {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Charts */
+
+.chart-box {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+}
+
+/* Tables */
+
+.table-box {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-size: 13px;
+    color: #777;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px 0;
+}
+
+td {
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 14px;
 }
