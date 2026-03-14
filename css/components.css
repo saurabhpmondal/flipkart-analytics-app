@@ -76,3 +76,53 @@ td {
     border-bottom: 1px solid #f1f1f1;
     font-size: 14px;
 }
+
+/* Sidebar */
+
+#sidebar{
+width:240px;
+background:white;
+border-right:1px solid #e5e7eb;
+padding:16px;
+}
+
+.menu-item{
+padding:10px;
+border-radius:6px;
+cursor:pointer;
+font-weight:500;
+}
+
+.menu-item:hover{
+background:#f3f4f6;
+}
+
+.active{
+background:#e6efff;
+color:#2563eb;
+font-weight:600;
+}
+
+.accordion-header{
+margin-top:10px;
+font-weight:600;
+cursor:pointer;
+padding:8px 6px;
+}
+
+.accordion-body{
+display:none;
+padding-left:10px;
+}
+
+.accordion-body div{
+padding:6px 8px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.accordion-body div:hover{
+background:#f3f4f6;
+}
+
+
