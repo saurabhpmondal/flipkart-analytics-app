@@ -223,4 +223,25 @@ border-radius:6px;
 background:#f3f4f6;
 }
 
+.search-box{
+position:relative;
+display:inline-block;
+}
+
+.search-box input{
+padding-right:22px;
+}
+
+#search-clear{
+position:absolute;
+right:6px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+display:none;
+font-size:14px;
+color:#666;
+}
+
+
 
