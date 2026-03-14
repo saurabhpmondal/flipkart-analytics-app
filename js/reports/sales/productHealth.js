@@ -50,7 +50,7 @@ export function buildProductHealth() {
 
     });
 
-    result.sort((a, b) => b.returnRate - a.returnRate);
+    result.sort((a,b)=>b.gross-a.gross);
 
     return result;
 
