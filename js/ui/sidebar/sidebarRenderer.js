@@ -108,4 +108,25 @@ function initSidebar() {
 
     });
 
+    /* ADD REPORT CLICK LOGIC */
+
+    const menuItems = document.querySelectorAll(".menu-item");
+
+    menuItems.forEach(item => {
+
+        item.onclick = () => {
+
+            menuItems.forEach(i => i.classList.remove("active"));
+            item.classList.add("active");
+
+            const report = item.dataset.report;
+
+            window.dispatchEvent(
+                new CustomEvent("report-change", { detail: report })
+            );
+
+        };
+
+    });
+
 }
