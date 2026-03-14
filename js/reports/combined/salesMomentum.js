@@ -94,7 +94,9 @@ export function renderSalesMomentum(containerId) {
                 <td>${r.date}</td>
                 <td>${r.units}</td>
                 <td>${r.revenue.toFixed(0)}</td>
-                <td>${(r.growth * 100).toFixed(2)}%</td>
+                <td style="color:${r.growth>0?'green':'red'}">
+${(r.growth*100).toFixed(2)}%
+</td>
             </tr>
         `;
 
