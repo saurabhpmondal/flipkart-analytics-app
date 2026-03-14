@@ -2,6 +2,8 @@
 
 import { buildGMVTable } from "../reports/summary/gmvTable.js";
 
+let gmvChartInstance = null;
+
 export function renderGMVChart() {
 
     const rows = buildGMVTable();
@@ -18,13 +20,17 @@ export function renderGMVChart() {
 
     if (!ctx) return;
 
-    new Chart(ctx, {
+    // Destroy existing chart before creating new one
+    if (gmvChartInstance) {
+        gmvChartInstance.destroy();
+    }
+
+    gmvChartInstance = new Chart(ctx, {
 
         type: "line",
 
         data: {
             labels: labels,
-
             datasets: [{
                 label: "Net Units Sold",
                 data: netUnits,
