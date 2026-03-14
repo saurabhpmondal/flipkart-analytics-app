@@ -1,77 +1,74 @@
 // js/ui/filters/filterRenderer.js
 
-import { setDateFilter } from "../../core/filterEngine.js";
-import { setSearchQuery } from "../../core/searchEngine.js";
-import { renderDashboard } from "../dashboard/dashboardRenderer.js";
+export function renderFilters(){
 
-export function renderFilters() {
+const bar=document.getElementById("filter-bar");
 
-    const container = document.getElementById("filter-bar");
+bar.innerHTML=`
 
-    container.innerHTML = `
+<div class="filter-group">
+<label>Range</label>
+<select id="rangeFilter">
+<option value="">Custom</option>
+<option value="thisMonth">This Month</option>
+<option value="lastMonth">Last Month</option>
+<option value="30">Last 30 Days</option>
+<option value="7">Last 7 Days</option>
+</select>
+</div>
 
-        <div class="filter-group">
-            <label>Start Date</label>
-            <input type="date" id="filter-start-date">
-        </div>
+<div class="filter-group">
+<label>Start</label>
+<input type="date" id="startDate">
+</div>
 
-        <div class="filter-group">
-            <label>End Date</label>
-            <input type="date" id="filter-end-date">
-        </div>
+<div class="filter-group">
+<label>End</label>
+<input type="date" id="endDate">
+</div>
 
-        <button id="apply-filter-btn">
-            Apply Filter
-        </button>
+<button id="apply-filter-btn">Apply</button>
+<button id="reset-filter-btn">Reset</button>
 
-        <input 
-            type="text" 
-            id="global-search" 
-            placeholder="Search SKU / Campaign / Keyword"
-        >
+<input id="global-search" placeholder="Search...">
+<span id="search-clear">✕</span>
 
-    `;
+`;
 
-    attachFilterEvents();
-
-}
-
-function attachFilterEvents() {
-
-    const applyBtn = document.getElementById("apply-filter-btn");
-    const searchBox = document.getElementById("global-search");
-
-    applyBtn.onclick = () => {
-
-        const start = document.getElementById("filter-start-date").value;
-        const end = document.getElementById("filter-end-date").value;
-
-        setDateFilter(start, end);
-
-        reloadDashboard();
-
-    };
-
-    searchBox.oninput = () => {
-
-        const query = searchBox.value;
-
-        setSearchQuery(query);
-
-        reloadDashboard();
-
-    };
+initFilters();
 
 }
 
-function reloadDashboard() {
+function initFilters(){
 
-    const charts = document.getElementById("dashboard-charts");
-    const tables = document.getElementById("dashboard-tables");
+const search=document.getElementById("global-search");
+const clear=document.getElementById("search-clear");
 
-    charts.innerHTML = "";
-    tables.innerHTML = "";
+search.oninput=()=>{
+filterTable(search.value);
+};
 
-    renderDashboard();
+clear.onclick=()=>{
+search.value="";
+filterTable("");
+};
+
+document.getElementById("reset-filter-btn").onclick=()=>{
+
+document.getElementById("startDate").value="";
+document.getElementById("endDate").value="";
+document.getElementById("rangeFilter").value="";
+
+};
+
+}
+
+function filterTable(text){
+
+const rows=document.querySelectorAll("tbody tr");
+
+rows.forEach(r=>{
+r.style.display=r.innerText.toLowerCase().includes(text.toLowerCase())?"":"none";
+});
 
 }
